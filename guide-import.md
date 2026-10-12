@@ -64,7 +64,7 @@ Il renvoie un objet dont les clés sont exactement les en-têtes de colonnes du 
    - `Gmail Trigger` et `Relire le mail` : credential Gmail ;
    - `Claude (classer et résumer)` : Authentication = Predefined Credential Type, type Anthropic, ton credential ;
    - `Google Sheets` : credential, puis choisis le document et l'onglet dans les listes. **`Column to match on` est réinitialisé à vide après le choix de l'onglet** (constaté le 2026-10-08) : remets `Message ID`, sinon l'exécution échoue avec « The 'Column to Match On' parameter is required ».
-   - `Lignes en erreur` (v2) : même credential, même document, même onglet.
+   - `Lignes en erreur` (v2) : même credential, même document, même onglet. **Le filtre est lui aussi vidé après le choix de l'onglet** (constaté le 2026-10-12) : remets `Catégorie` = `Erreur API` dans `Filters`, sinon la reprise retraite tout le tableau toutes les 6 h (un appel à Claude par ligne).
 5. **Relier l'alerte** : dans le workflow principal, Settings → Error workflow → « Alerte erreurs (Gmail → Claude → Sheets) ».
 6. **Premier test manuel** : dans `Gmail Trigger`, clique « Fetch Test Event », puis « Test workflow ». Vérifie la ligne ajoutée dans le Sheet.
 7. **Publier** le workflow principal (bouton Publish) seulement après ce test. Dans le bouton Execute, la flèche ⌄ permet de choisir le déclencheur à tester (Gmail Trigger ou Reprise des erreurs).
