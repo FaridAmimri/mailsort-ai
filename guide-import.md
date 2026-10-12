@@ -15,7 +15,7 @@ Les deux workflows sont importés **désactivés** et **sans identifiants** : tu
 ## Ce que fait chaque nœud
 
 ### 1. Gmail Trigger
-Interroge Gmail toutes les heures (à hh:00) et sort un item par nouveau mail.
+Interroge Gmail toutes les heures (à hh:07, hors de l'heure pile où les quotas Google sont les plus sollicités) et sort un item par nouveau mail.
 - Recherche : `in:inbox -category:promotions -category:social`
 - `Simplify` désactivé : on récupère le texte complet (`text`, `html`), pas seulement l'extrait.
 - `Read Status = both` : un mail déjà lu sur ton téléphone avant la vérification est quand même traité.
@@ -47,6 +47,7 @@ Il renvoie un objet dont les clés sont exactement les en-têtes de colonnes du 
 - Colonne de correspondance : `Message ID`. Un mail déjà présent est mis à jour au lieu d'être dupliqué.
 - Mapping automatique : chaque clé de l'item va dans la colonne du même nom. La colonne `Statut` n'est jamais écrite par n8n, donc ce que tu y notes est conservé.
 - `Cell Format = RAW` : les valeurs sont écrites telles quelles. Sans ça, un objet de mail commençant par `=` serait interprété comme une formule par Sheets.
+- `Retry On Fail` (5 essais, 5 s d'écart), aussi sur `Lignes en erreur` : l'API Google Sheets renvoie parfois « The service is receiving too many requests from you » (quota par minute dépassé). Une nouvelle tentative quelques secondes plus tard passe, au lieu de faire échouer toute l'exécution.
 
 ### Workflow d'alerte
 `Error Trigger` reçoit l'échec du workflow principal, puis `Envoyer l'alerte` t'envoie un mail avec le nom du nœud en erreur, le message d'erreur et le lien vers l'exécution.
@@ -82,7 +83,7 @@ Il renvoie un objet dont les clés sont exactement les en-têtes de colonnes du 
 Changements de la v2 (`workflow-principal-v2.json`) :
 - nœud Claude en « Continue (using error output) » : un échec après 3 essais n'arrête plus le lot ;
 - `Marquer en erreur` écrit une ligne `Erreur API` ;
-- déclencheur `Reprise des erreurs` toutes les 6 h (à hh:30) qui relit ces mails dans Gmail et les retraite. Chaque passage compte comme une exécution (≈ 120/mois), d'où 6 h et non 1 h.
+- déclencheur `Reprise des erreurs` toutes les 6 h (à hh:37) qui relit ces mails dans Gmail et les retraite. Chaque passage compte comme une exécution (≈ 120/mois), d'où 6 h et non 1 h.
 
 Limite connue : un échec de Claude ne déclenche plus le mail d'alerte (l'exécution réussit) ; il est visible dans le Sheet. La priorité peut varier (`haute`/`moyenne`) sur les cas limites.
 
