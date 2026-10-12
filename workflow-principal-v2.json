@@ -7,7 +7,7 @@
           "item": [
             {
               "mode": "everyHour",
-              "minute": 0
+              "minute": 7
             }
           ]
         },
@@ -269,12 +269,15 @@
       "position": [
         880,
         0
-      ]
+      ],
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000
     },
     {
       "parameters": {
         "mode": "runOnceForEachItem",
-        "jsCode": "// L'appel à Claude a échoué après 3 essais : on écrit une ligne \"Erreur API\".\n// Le mail sera retraité par le déclencheur \"Reprise des erreurs\" (toutes les heures à hh:30).\nconst mail = $('Préparer le mail').item.json;\nconst erreur = String(($json.error && ($json.error.message || $json.error)) || 'erreur inconnue').slice(0, 150);\nconst recu = DateTime.fromISO(String(mail.date));\nreturn {\n  json: {\n    'Date': recu.isValid ? recu.setZone('Europe/Paris').toFormat('yyyy-MM-dd HH:mm') : String(mail.date || ''),\n    'Expéditeur': mail.from_name,\n    'Email': mail.from_email,\n    'Objet': mail.subject,\n    'Catégorie': 'Erreur API',\n    'Priorité': 'moyenne',\n    'Résumé': mail.subject,\n    'Action': 'Reprise automatique prévue (' + erreur + ')',\n    'Lien': 'https://mail.google.com/mail/u/0/#all/' + mail.message_id,\n    'Message ID': mail.message_id,\n    'Traité le': DateTime.now().setZone('Europe/Paris').toFormat('yyyy-MM-dd HH:mm'),\n  },\n};\n"
+        "jsCode": "// L'appel à Claude a échoué après 3 essais : on écrit une ligne \"Erreur API\".\n// Le mail sera retraité par le déclencheur \"Reprise des erreurs\" (toutes les 6 h à hh:37).\nconst mail = $('Préparer le mail').item.json;\nconst erreur = String(($json.error && ($json.error.message || $json.error)) || 'erreur inconnue').slice(0, 150);\nconst recu = DateTime.fromISO(String(mail.date));\nreturn {\n  json: {\n    'Date': recu.isValid ? recu.setZone('Europe/Paris').toFormat('yyyy-MM-dd HH:mm') : String(mail.date || ''),\n    'Expéditeur': mail.from_name,\n    'Email': mail.from_email,\n    'Objet': mail.subject,\n    'Catégorie': 'Erreur API',\n    'Priorité': 'moyenne',\n    'Résumé': mail.subject,\n    'Action': 'Reprise automatique prévue (' + erreur + ')',\n    'Lien': 'https://mail.google.com/mail/u/0/#all/' + mail.message_id,\n    'Message ID': mail.message_id,\n    'Traité le': DateTime.now().setZone('Europe/Paris').toFormat('yyyy-MM-dd HH:mm'),\n  },\n};\n"
       },
       "id": "63ab6a50-2630-441c-ba4a-8545b9cef2fd",
       "name": "Marquer en erreur",
@@ -292,7 +295,7 @@
             {
               "field": "hours",
               "hoursInterval": 6,
-              "triggerAtMinute": 30
+              "triggerAtMinute": 37
             }
           ]
         }
@@ -336,7 +339,10 @@
       "position": [
         -220,
         300
-      ]
+      ],
+      "retryOnFail": true,
+      "maxTries": 5,
+      "waitBetweenTries": 5000
     },
     {
       "parameters": {
