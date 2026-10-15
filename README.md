@@ -6,6 +6,8 @@ un Google Sheet. Le matin, je lis le tableau au lieu de trier ma boîte de réce
 
 En production sur n8n Cloud depuis le 8 octobre 2026.
 
+Nouveau dans l'automatisation ? Lis d'abord [le projet expliqué simplement](docs/explication-debutant.md).
+
 ## Le problème
 
 Une boîte de réception mélange les demandes de clients, les factures, les alertes
@@ -93,6 +95,7 @@ n8n Cloud · Claude API (Anthropic) · Gmail API · Google Sheets API · JavaScr
 | [`prompt-claude.md`](prompt-claude.md) | Le prompt envoyé à Claude et le choix des paramètres. |
 | [`workflow-gmail-claude-sheets.md`](workflow-gmail-claude-sheets.md) | Document de conception. |
 | [`guide-import.md`](guide-import.md) | Installation pas à pas dans n8n. |
+| [`docs/explication-debutant.md`](docs/explication-debutant.md) | Le projet expliqué simplement, étape par étape, avec la stack et un glossaire. |
 | [`exemples/exemple-sheet.csv`](exemples/exemple-sheet.csv) | Exemple de tableau avec des données fictives. |
 | [`workflow-principal.json`](workflow-principal.json) | Première version, gardée pour l'historique. |
 
