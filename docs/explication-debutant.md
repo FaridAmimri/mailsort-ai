@@ -207,7 +207,7 @@ La « stack », c'est la liste des outils et technologies qui composent le proje
 
 | Outil | Rôle |
 |---|---|
-| **Git** et **GitHub** | Garder l'historique de chaque version du workflow. Les modifications passent par des **pull requests** (une proposition de changement relue avant d'être intégrée). Le dépôt est public : https://github.com/FaridAmimri/n8n-gmail-trigger |
+| **Git** et **GitHub** | Garder l'historique de chaque version du workflow. Les modifications passent par des **pull requests** (une proposition de changement relue avant d'être intégrée). Le dépôt est public : https://github.com/FaridAmimri/mailsort-ai |
 | **Markdown** | Le format des documents (README, guide d'import, conception, ce document). |
 | **Mermaid** | Le schéma du flux dans le README, dessiné automatiquement par GitHub. |
 | **Claude** (assistant IA) | Aide à la conception, à l'écriture du JSON importable et du prompt, aux tests et à la documentation. La configuration dans n8n, la saisie des accès, les tests réels et la mise en production ont été faits à la main par Farid. |
